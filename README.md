@@ -36,7 +36,9 @@ VITE_SUPABASE_URL=tu_supabase_url
 VITE_SUPABASE_ANON_KEY=tu_supabase_anon_key
 ```
 
-4. **Configurar base de datos Supabase**
+4. **Configurar base de datos**
+
+### Opción A: Supabase (Recomendado)
 ```bash
 # Instalar Supabase CLI
 npm install -g supabase
@@ -49,6 +51,44 @@ supabase link --project-ref xyeblzjuejqreiejnhgv
 
 # Aplicar migraciones
 supabase db push
+```
+
+### Opción B: PostgreSQL Local
+```bash
+# Instalar PostgreSQL
+# Ubuntu/Debian: sudo apt install postgresql postgresql-contrib
+# macOS: brew install postgresql
+
+# Crear base de datos
+createdb delphi_db
+
+# Configurar variables de entorno
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=delphi_db
+DB_USER=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
+
+### Opción C: MySQL
+```bash
+# Instalar MySQL
+# Ubuntu/Debian: sudo apt install mysql-server
+# macOS: brew install mysql
+
+# Crear base de datos
+mysql -u root -p
+CREATE DATABASE delphi_db;
+CREATE USER 'delphi_user'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON delphi_db.* TO 'delphi_user'@'localhost';
+FLUSH PRIVILEGES;
+
+# Configurar variables de entorno
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=delphi_db
+DB_USER=delphi_user
+DB_PASSWORD=password
 ```
 
 5. **Configurar envío de emails**
