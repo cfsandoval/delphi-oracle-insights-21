@@ -10,6 +10,9 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Experts from "./pages/Experts";
 import NotFound from "./pages/NotFound";
+import { StudyPreview } from "./pages/StudyPreview";
+import { StudyParticipation } from "./pages/StudyParticipation";
+import { StudyCompleted } from "./pages/StudyCompleted";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +28,9 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/experts" element={<Experts />} />
+              <Route path="/study/:studyId/preview" element={<StudyPreview />} />
+              <Route path="/study/:studyId/participate" element={<StudyParticipation />} />
+              <Route path="/study-completed" element={<StudyCompleted />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

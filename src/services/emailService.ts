@@ -138,8 +138,8 @@ export class EmailService {
   }
 
   private generateInvitationHTML(data: InvitationEmailData): string {
-    // Use a configurable base URL instead of window.location.origin (which doesn't work server-side)
-    const baseUrl = 'https://lovable.dev/projects/xyeblzjuejqreiejnhgv';
+    // Use the current project's domain for the links
+    const baseUrl = 'https://0b6a52f4-8dac-4367-95c8-0802b2a8ae90.lovableproject.com';
     
     return `
       <!DOCTYPE html>
@@ -222,8 +222,8 @@ export class EmailService {
               <p>To participate in this study, please click the button below:</p>
               
               <div style="text-align: center;">
-                <a href="${baseUrl}${data.studyId ? `/study/${data.studyId}` : ''}" class="button">
-                  Join Study
+                <a href="${baseUrl}/study/${data.studyId || 'demo'}/preview" class="button">
+                  Ver Vista Previa del Estudio
                 </a>
               </div>
               
