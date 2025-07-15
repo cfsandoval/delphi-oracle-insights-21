@@ -8,7 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ExpertTable } from './ExpertTable';
 import { ExpertForm } from './ExpertForm';
 import { ExpertImport } from './ExpertImport';
-import { Plus, Download, Upload, Users } from 'lucide-react';
+import { ExpertInvitation } from './ExpertInvitation';
+import { Plus, Download, Upload, Users, Mail } from 'lucide-react';
 
 export const ExpertManagement: React.FC = () => {
   const { t } = useLanguage();
@@ -16,6 +17,7 @@ export const ExpertManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [showInvitation, setShowInvitation] = useState(false);
 
   const filteredExperts = experts.filter(expert =>
     expert.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -81,6 +83,15 @@ export const ExpertManagement: React.FC = () => {
             {t('experts.export')}
           </Button>
           <Button
+            variant="outline"
+            onClick={() => setShowInvitation(true)}
+            disabled={experts.length === 0}
+            className="flex items-center gap-2"
+          >
+            <Mail className="h-4 w-4" />
+            Enviar Invitaciones
+          </Button>
+          <Button
             onClick={() => setShowForm(true)}
             className="flex items-center gap-2"
           >
@@ -118,6 +129,13 @@ export const ExpertManagement: React.FC = () => {
       <ExpertImport 
         open={showImport}
         onOpenChange={setShowImport}
+      />
+
+      {/* Enviar Invitaciones */}
+      <ExpertInvitation
+        open={showInvitation}
+        onOpenChange={setShowInvitation}
+        experts={experts}
       />
     </div>
   );
