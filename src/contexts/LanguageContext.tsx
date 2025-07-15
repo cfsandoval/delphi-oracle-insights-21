@@ -92,6 +92,39 @@ const translations = {
     'common.filter': 'Filtrar',
     'common.all': 'Todos',
     'common.loading': 'Cargando...',
+    
+    // Experts Module
+    'experts.title': 'Gestión de Expertos',
+    'experts.description': 'Administra tu panel de expertos para estudios Delphi',
+    'experts.add': 'Agregar Experto',
+    'experts.import': 'Importar desde CSV',
+    'experts.export': 'Exportar',
+    'experts.name': 'Nombre',
+    'experts.email': 'Correo Electrónico',
+    'experts.expertise': 'Área de Expertise',
+    'experts.institution': 'Institución',
+    'experts.experience': 'Años de Experiencia',
+    'experts.education': 'Nivel Educativo',
+    'experts.phone': 'Teléfono',
+    'experts.notes': 'Notas',
+    'experts.status': 'Estado',
+    'experts.status.active': 'Activo',
+    'experts.status.inactive': 'Inactivo',
+    'experts.status.invited': 'Invitado',
+    'experts.status.declined': 'Declinó',
+    'experts.actions': 'Acciones',
+    'experts.edit': 'Editar',
+    'experts.delete': 'Eliminar',
+    'experts.invite': 'Invitar',
+    'experts.empty.title': 'No hay expertos registrados',
+    'experts.empty.description': 'Comienza agregando expertos individualmente o importando desde CSV',
+    'experts.form.title.add': 'Agregar Nuevo Experto',
+    'experts.form.title.edit': 'Editar Experto',
+    'experts.csv.instructions': 'Formato CSV: Nombre, Email, Área de Expertise, Institución, Años de Experiencia, Nivel Educativo, Teléfono, Notas',
+    'experts.csv.example': 'Ejemplo: Dr. Juan Pérez, juan@universidad.edu, Economía, Universidad Nacional, 15, Doctorado, +1234567890, Especialista en macroeconomía',
+    'experts.validation.required': 'Este campo es requerido',
+    'experts.validation.email': 'Ingrese un email válido',
+    'experts.validation.experience': 'Debe ser un número positivo',
   },
   en: {
     // Header
@@ -175,13 +208,46 @@ const translations = {
     'common.filter': 'Filter',
     'common.all': 'All',
     'common.loading': 'Loading...',
+    
+    // Experts Module
+    'experts.title': 'Expert Management',
+    'experts.description': 'Manage your expert panel for Delphi studies',
+    'experts.add': 'Add Expert',
+    'experts.import': 'Import from CSV',
+    'experts.export': 'Export',
+    'experts.name': 'Name',
+    'experts.email': 'Email',
+    'experts.expertise': 'Expertise Area',
+    'experts.institution': 'Institution',
+    'experts.experience': 'Years of Experience',
+    'experts.education': 'Education Level',
+    'experts.phone': 'Phone',
+    'experts.notes': 'Notes',
+    'experts.status': 'Status',
+    'experts.status.active': 'Active',
+    'experts.status.inactive': 'Inactive',
+    'experts.status.invited': 'Invited',
+    'experts.status.declined': 'Declined',
+    'experts.actions': 'Actions',
+    'experts.edit': 'Edit',
+    'experts.delete': 'Delete',
+    'experts.invite': 'Invite',
+    'experts.empty.title': 'No experts registered',
+    'experts.empty.description': 'Start by adding experts individually or importing from CSV',
+    'experts.form.title.add': 'Add New Expert',
+    'experts.form.title.edit': 'Edit Expert',
+    'experts.csv.instructions': 'CSV Format: Name, Email, Expertise Area, Institution, Years of Experience, Education Level, Phone, Notes',
+    'experts.csv.example': 'Example: Dr. John Smith, john@university.edu, Economics, National University, 15, PhD, +1234567890, Specialist in macroeconomics',
+    'experts.validation.required': 'This field is required',
+    'experts.validation.email': 'Please enter a valid email',
+    'experts.validation.experience': 'Must be a positive number',
   }
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('es'); // Español como idioma predeterminado
 
   const t = (key: string): string => {
     return translations[language][key] || key;

@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      experts: {
+        Row: {
+          created_at: string
+          education_level: string | null
+          email: string
+          expertise_area: string | null
+          id: string
+          institution: string | null
+          name: string
+          notes: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+          user_id: string
+          years_experience: number | null
+        }
+        Insert: {
+          created_at?: string
+          education_level?: string | null
+          email: string
+          expertise_area?: string | null
+          id?: string
+          institution?: string | null
+          name: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+          years_experience?: number | null
+        }
+        Update: {
+          created_at?: string
+          education_level?: string | null
+          email?: string
+          expertise_area?: string | null
+          id?: string
+          institution?: string | null
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -85,6 +133,57 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      study_participants: {
+        Row: {
+          created_at: string
+          expert_id: string
+          id: string
+          invitation_sent_at: string | null
+          last_response_at: string | null
+          response_status: string
+          rounds_completed: number | null
+          study_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          expert_id: string
+          id?: string
+          invitation_sent_at?: string | null
+          last_response_at?: string | null
+          response_status?: string
+          rounds_completed?: number | null
+          study_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          expert_id?: string
+          id?: string
+          invitation_sent_at?: string | null
+          last_response_at?: string | null
+          response_status?: string
+          rounds_completed?: number | null
+          study_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_participants_expert_id_fkey"
+            columns: ["expert_id"]
+            isOneToOne: false
+            referencedRelation: "experts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "study_participants_study_id_fkey"
+            columns: ["study_id"]
+            isOneToOne: false
+            referencedRelation: "studies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
