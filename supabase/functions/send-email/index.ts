@@ -4,9 +4,7 @@ import { Resend } from "npm:resend@2.0.0";
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": process.env.NODE_ENV === 'production' 
-    ? "https://*.lovableproject.com" 
-    : "*",
+  "Access-Control-Allow-Origin": "*", // Allow all origins for now, restrict in production
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -61,8 +59,20 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { to, subject, html, from }: EmailRequest = await req.json();
 
+    console.log("Received email request:", { to, subject, from });
+
+    // Check if Resend API key is configured
+    if (!Deno.env.get("RESEND_API_KEY")) {
+      console.error("RESEND_API_KEY not configured");
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     // Validate input
     if (!validateEmail(to)) {
+      console.error("Invalid email address:", to);
       return new Response(
         JSON.stringify({ error: "Invalid email address" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
@@ -71,6 +81,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Check rate limiting
     if (isRateLimited(to, 3, 300000)) { // 3 emails per 5 minutes per email
+      console.error("Rate limit exceeded for:", to);
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded" }),
         { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
@@ -81,7 +92,7 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedSubject = sanitizeInput(subject, 200);
     const sanitizedFrom = from ? sanitizeInput(from, 100) : "Delphi Platform <onboarding@resend.dev>";
 
-    console.log("Sending email to:", to);
+    console.log("Sending email to:", to, "with subject:", sanitizedSubject);
 
     const emailResponse = await resend.emails.send({
       from: sanitizedFrom,
@@ -101,8 +112,12 @@ const handler = async (req: Request): Promise<Response> => {
     });
   } catch (error: any) {
     console.error("Error in send-email function:", error);
+    console.error("Error stack:", error.stack);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: error.name || "Unknown error type"
+      }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
