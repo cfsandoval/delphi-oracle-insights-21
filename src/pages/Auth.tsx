@@ -136,6 +136,33 @@ export default function Auth() {
                 <Button type="submit" className="w-full" disabled={isSigningIn}>
                   {isSigningIn ? t('common.loading') : t('auth.signIn')}
                 </Button>
+                
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Acceso rápido
+                    </span>
+                  </div>
+                </div>
+                
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    const emailInput = document.getElementById('signin-email') as HTMLInputElement;
+                    const passwordInput = document.getElementById('signin-password') as HTMLInputElement;
+                    if (emailInput && passwordInput) {
+                      emailInput.value = 'admin@delphi.com';
+                      passwordInput.value = 'admin123';
+                    }
+                  }}
+                >
+                  🔑 Acceso Admin
+                </Button>
               </form>
             </TabsContent>
 
