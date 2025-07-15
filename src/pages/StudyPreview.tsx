@@ -7,7 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Clock, Users, FileText, Target } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-export const StudyPreview: React.FC = () => {
+const StudyPreview: React.FC = () => {
   const { studyId } = useParams();
   const navigate = useNavigate();
   const { t, language } = useLanguage();
@@ -212,3 +212,5 @@ export const StudyPreview: React.FC = () => {
     </div>
   );
 };
+
+export default StudyPreview;

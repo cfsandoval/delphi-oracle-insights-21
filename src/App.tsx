@@ -10,9 +10,9 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Experts from "./pages/Experts";
 import NotFound from "./pages/NotFound";
-import { StudyPreview } from "./pages/StudyPreview";
-import { StudyParticipation } from "./pages/StudyParticipation";
-import { StudyCompleted } from "./pages/StudyCompleted";
+import StudyPreview from "./pages/StudyPreview";
+import StudyParticipation from "./pages/StudyParticipation";
+import StudyCompleted from "./pages/StudyCompleted";
 
 const queryClient = new QueryClient();
 

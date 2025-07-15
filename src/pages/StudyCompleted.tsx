@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle, Home, Mail } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-export const StudyCompleted: React.FC = () => {
+const StudyCompleted: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { language } = useLanguage();
@@ -110,3 +110,5 @@ export const StudyCompleted: React.FC = () => {
     </div>
   );
 };
+
+export default StudyCompleted;

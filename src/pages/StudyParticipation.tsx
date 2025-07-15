@@ -11,7 +11,7 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 
-export const StudyParticipation: React.FC = () => {
+const StudyParticipation: React.FC = () => {
   const { studyId } = useParams();
   const navigate = useNavigate();
   const { language } = useLanguage();
@@ -171,7 +171,9 @@ export const StudyParticipation: React.FC = () => {
       default:
         return null;
     }
-  };
+};
+
+export default StudyParticipation;
 
   return (
     <div className="container mx-auto p-6 max-w-3xl">
