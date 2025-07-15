@@ -7,6 +7,7 @@ export interface Study {
   };
   methodology: "traditional" | "realtime";
   status: "draft" | "active" | "completed" | "paused";
+  category: string;
   experts: number;
   rounds: number;
   currentRound: number;

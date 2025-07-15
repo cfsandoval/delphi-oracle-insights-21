@@ -27,6 +27,7 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
     title: { es: "", en: "" },
     description: { es: "", en: "" },
     methodology: methodology || "" as "traditional" | "realtime" | "",
+    category: "general",
     rounds: 3,
     participants: [],
     questions: [],
@@ -104,6 +105,7 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
       description: studyData.description,
       methodology: studyData.methodology as "traditional" | "realtime",
       status: "draft" as const,
+      category: studyData.category || "general",
       experts: studyData.participants.length,
       rounds: studyData.methodology === "traditional" ? studyData.rounds : 1,
       currentRound: 0,
@@ -232,6 +234,26 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
                     value={studyData.description.es}
                     onChange={(e) => setStudyData({...studyData, description: {...studyData.description, es: e.target.value}})}
                   />
+                </div>
+
+                <div>
+                  <Label htmlFor="category">Study Category</Label>
+                  <Select value={studyData.category} onValueChange={(value) => setStudyData({...studyData, category: value})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="general">General</SelectItem>
+                      <SelectItem value="desarrollo territorial">Desarrollo Territorial</SelectItem>
+                      <SelectItem value="salud pública">Salud Pública</SelectItem>
+                      <SelectItem value="construcción de paz">Construcción de Paz</SelectItem>
+                      <SelectItem value="educación">Educación</SelectItem>
+                      <SelectItem value="medio ambiente">Medio Ambiente</SelectItem>
+                      <SelectItem value="política pública">Política Pública</SelectItem>
+                      <SelectItem value="economía">Economía</SelectItem>
+                      <SelectItem value="tecnología">Tecnología</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>

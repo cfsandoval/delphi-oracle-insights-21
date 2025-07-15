@@ -91,6 +91,7 @@ export type Database = {
       }
       studies: {
         Row: {
+          category: string | null
           created_at: string
           description_en: string | null
           description_es: string | null
@@ -105,6 +106,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          category?: string | null
           created_at?: string
           description_en?: string | null
           description_es?: string | null
@@ -119,6 +121,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          category?: string | null
           created_at?: string
           description_en?: string | null
           description_es?: string | null

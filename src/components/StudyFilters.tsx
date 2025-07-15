@@ -1,5 +1,6 @@
 
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search } from "lucide-react";
 
@@ -10,6 +11,8 @@ interface StudyFiltersProps {
   setFilterStatus: (status: string) => void;
   filterMethodology: string;
   setFilterMethodology: (methodology: string) => void;
+  filterCategory: string;
+  setFilterCategory: (category: string) => void;
 }
 
 const StudyFilters = ({
@@ -18,7 +21,9 @@ const StudyFilters = ({
   filterStatus,
   setFilterStatus,
   filterMethodology,
-  setFilterMethodology
+  setFilterMethodology,
+  filterCategory,
+  setFilterCategory
 }: StudyFiltersProps) => {
   return (
     <div className="flex flex-col lg:flex-row gap-4">
@@ -55,6 +60,26 @@ const StudyFilters = ({
           <SelectItem value="realtime">Tiempo Real</SelectItem>
         </SelectContent>
       </Select>
+      
+      <div>
+        <Select value={filterCategory} onValueChange={setFilterCategory}>
+          <SelectTrigger className="w-full lg:w-48">
+            <SelectValue placeholder="Categoría" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todas las categorías</SelectItem>
+            <SelectItem value="general">General</SelectItem>
+            <SelectItem value="desarrollo territorial">Desarrollo Territorial</SelectItem>
+            <SelectItem value="salud pública">Salud Pública</SelectItem>
+            <SelectItem value="construcción de paz">Construcción de Paz</SelectItem>
+            <SelectItem value="educación">Educación</SelectItem>
+            <SelectItem value="medio ambiente">Medio Ambiente</SelectItem>
+            <SelectItem value="política pública">Política Pública</SelectItem>
+            <SelectItem value="economía">Economía</SelectItem>
+            <SelectItem value="tecnología">Tecnología</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 };

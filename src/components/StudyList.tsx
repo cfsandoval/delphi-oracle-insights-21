@@ -17,14 +17,16 @@ const StudyList = ({ onSelectStudy }: StudyListProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterMethodology, setFilterMethodology] = useState("all");
+  const [filterCategory, setFilterCategory] = useState("all");
 
   const filteredStudies = studies.filter(study => {
     const matchesSearch = study.title[language].toLowerCase().includes(searchTerm.toLowerCase()) ||
                          study.description[language].toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || study.status === filterStatus;
     const matchesMethodology = filterMethodology === "all" || study.methodology === filterMethodology;
+    const matchesCategory = filterCategory === "all" || study.category === filterCategory;
     
-    return matchesSearch && matchesStatus && matchesMethodology;
+    return matchesSearch && matchesStatus && matchesMethodology && matchesCategory;
   });
 
   return (
@@ -36,6 +38,8 @@ const StudyList = ({ onSelectStudy }: StudyListProps) => {
         setFilterStatus={setFilterStatus}
         filterMethodology={filterMethodology}
         setFilterMethodology={setFilterMethodology}
+        filterCategory={filterCategory}
+        setFilterCategory={setFilterCategory}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

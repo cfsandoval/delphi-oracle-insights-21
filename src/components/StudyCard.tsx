@@ -48,6 +48,9 @@ const StudyCard = ({ study, onSelectStudy }: StudyCardProps) => {
                 <span className="capitalize">{t(`status.${study.status}`)}</span>
               </div>
             </Badge>
+            <Badge variant="secondary" className="text-xs">
+              {study.category}
+            </Badge>
             <Badge variant="outline">
               {study.methodology === "traditional" ? t('study.traditional') : t('study.realtime')}
             </Badge>

@@ -46,6 +46,7 @@ export class SupabaseStudyService {
       description_en: studyData.description?.en || '',
       type: studyData.methodology,
       status: studyData.status,
+      category: studyData.category || 'general',
       rounds_data: { rounds: studyData.rounds, currentRound: studyData.currentRound, experts: studyData.experts, consensus: studyData.consensus },
       settings: {}
     };
@@ -79,6 +80,7 @@ export class SupabaseStudyService {
 
     if (updates.methodology) dbUpdates.type = updates.methodology;
     if (updates.status) dbUpdates.status = updates.status;
+    if (updates.category) dbUpdates.category = updates.category;
     if (updates.rounds !== undefined || updates.currentRound !== undefined || updates.experts !== undefined || updates.consensus !== undefined) {
       dbUpdates.rounds_data = { 
         rounds: updates.rounds ?? 0, 
@@ -131,6 +133,7 @@ export class SupabaseStudyService {
       },
       methodology: dbStudy.type,
       status: dbStudy.status,
+      category: dbStudy.category || 'general',
       rounds: roundsData.rounds || 0,
       currentRound: roundsData.currentRound || 0,
       experts: roundsData.experts || 0,
