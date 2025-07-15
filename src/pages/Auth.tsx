@@ -12,12 +12,14 @@ import { useToast } from '@/hooks/use-toast';
 import { FeedbackTooltip } from '@/components/FeedbackTooltip';
 
 export default function Auth() {
-  const { user, signUp, signIn, isLoading } = useAuth();
+  const { user, signUp, signIn, resetPassword, isLoading } = useAuth();
   const { t } = useLanguage();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningUp, setIsSigningUp] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const [showResetForm, setShowResetForm] = useState(false);
   const [error, setError] = useState('');
 
   // Redirect if already authenticated
@@ -91,6 +93,66 @@ export default function Auth() {
     setIsSigningUp(false);
   };
 
+  const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsResetting(true);
+    setError('');
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+
+    const { error } = await resetPassword(email);
+    
+    if (error) {
+      setError(error.message);
+      toast({
+        title: 'Error',
+        description: error.message,
+        variant: 'destructive'
+      });
+    } else {
+      toast({
+        title: 'Email enviado',
+        description: 'Revisa tu bandeja de entrada para restablecer tu contraseña'
+      });
+      setShowResetForm(false);
+    }
+    
+    setIsResetting(false);
+  };
+
+  const handleTestEmail = async () => {
+    try {
+      const response = await fetch('https://xyeblzjuejqreiejnhgv.supabase.co/functions/v1/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({
+          to: 'cfsandoval@gmail.com',
+          subject: 'Test de Email - Delphi App',
+          html: '<h1>Email de prueba</h1><p>Este es un email de prueba del sistema Delphi.</p>'
+        })
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Test exitoso',
+          description: 'Email de prueba enviado correctamente'
+        });
+      } else {
+        throw new Error('Error en el envío');
+      }
+    } catch (error) {
+      toast({
+        title: 'Error en test',
+        description: 'No se pudo enviar el email de prueba',
+        variant: 'destructive'
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 p-4">
       <Card className="w-full max-w-md">
@@ -100,9 +162,10 @@ export default function Auth() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="space-y-4">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="signin">{t('auth.signIn')}</TabsTrigger>
               <TabsTrigger value="signup">{t('auth.signUp')}</TabsTrigger>
+              <TabsTrigger value="reset">Recuperar</TabsTrigger>
             </TabsList>
 
             {error && (
@@ -163,6 +226,15 @@ export default function Auth() {
                 >
                   🔑 Acceso Admin
                 </Button>
+                
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="w-full"
+                  onClick={handleTestEmail}
+                >
+                  📧 Test Email
+                </Button>
               </form>
             </TabsContent>
 
@@ -200,6 +272,24 @@ export default function Auth() {
                 </div>
                 <Button type="submit" className="w-full" disabled={isSigningUp}>
                   {isSigningUp ? t('common.loading') : t('auth.signUp')}
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="reset">
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="reset-email">Email</Label>
+                  <Input
+                    id="reset-email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="Ingresa tu email"
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={isResetting}>
+                  {isResetting ? 'Enviando...' : 'Enviar email de recuperación'}
                 </Button>
               </form>
             </TabsContent>

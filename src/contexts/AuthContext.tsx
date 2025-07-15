@@ -9,6 +9,7 @@ interface AuthContextType {
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -116,13 +117,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await supabase.auth.signOut();
   };
 
+  const resetPassword = async (email: string) => {
+    const redirectUrl = `${window.location.origin}/auth`;
+    
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: redirectUrl
+    });
+
+    if (error) {
+      let errorMessage = error.message;
+      
+      if (error.message.includes('Invalid email')) {
+        errorMessage = 'El formato del email no es válido';
+      } else if (error.message.includes('Email not found')) {
+        errorMessage = 'No existe una cuenta con este email';
+      }
+      
+      return { error: { message: errorMessage } };
+    }
+
+    return { error: null };
+  };
+
   const value = {
     user,
     session,
     isLoading,
     signUp,
     signIn,
-    signOut
+    signOut,
+    resetPassword
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

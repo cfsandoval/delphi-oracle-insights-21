@@ -14,6 +14,7 @@ import CreateStudy from "@/components/CreateStudy";
 import Library from "@/components/Library";
 import StudyTypeSelector from "@/components/StudyTypeSelector";
 import { FeedbackTooltip } from "@/components/FeedbackTooltip";
+import { WelcomeModal } from "@/components/WelcomeModal";
 
 const Index = () => {
   const { user, isLoading } = useAuth();
@@ -53,6 +54,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <WelcomeModal />
       <Header activeView={activeView} setActiveView={setActiveView} />
 
       <main className="container mx-auto px-6 py-8">
