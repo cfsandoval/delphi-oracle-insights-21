@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (email: string, password: string, displayName?: string) => {
     const redirectUrl = `${window.location.origin}/`;
     
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -59,7 +59,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
     });
-    return { error };
+
+    // Check if user already exists
+    if (error && error.message.includes('User already registered')) {
+      return { 
+        error: { 
+          message: 'Este email ya está registrado. Intenta iniciar sesión o usar un email diferente.'
+        }
+      };
+    }
+
+    // Check for other signup errors
+    if (error) {
+      let errorMessage = error.message;
+      
+      // Translate common errors to Spanish
+      if (error.message.includes('Invalid email')) {
+        errorMessage = 'El formato del email no es válido';
+      } else if (error.message.includes('Password should be at least')) {
+        errorMessage = 'La contraseña debe tener al menos 6 caracteres';
+      } else if (error.message.includes('Email not confirmed')) {
+        errorMessage = 'Debes confirmar tu email antes de poder iniciar sesión';
+      }
+      
+      return { error: { message: errorMessage } };
+    }
+
+    return { error: null, data };
   };
 
   const signIn = async (email: string, password: string) => {
@@ -67,6 +93,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email,
       password
     });
+
+    // Translate common login errors to Spanish
+    if (error) {
+      let errorMessage = error.message;
+      
+      if (error.message.includes('Invalid login credentials')) {
+        errorMessage = 'Email o contraseña incorrectos';
+      } else if (error.message.includes('Email not confirmed')) {
+        errorMessage = 'Debes confirmar tu email antes de poder iniciar sesión. Revisa tu bandeja de entrada.';
+      } else if (error.message.includes('Too many requests')) {
+        errorMessage = 'Demasiados intentos de inicio de sesión. Intenta nuevamente en unos minutos.';
+      }
+      
+      return { error: { message: errorMessage } };
+    }
+
     return { error };
   };
 

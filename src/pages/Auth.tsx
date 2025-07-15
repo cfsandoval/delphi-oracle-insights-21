@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -9,11 +9,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
+import { FeedbackTooltip } from '@/components/FeedbackTooltip';
 
 export default function Auth() {
   const { user, signUp, signIn, isLoading } = useAuth();
   const { t } = useLanguage();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [error, setError] = useState('');
@@ -77,15 +79,13 @@ export default function Auth() {
     if (error) {
       setError(error.message);
       toast({
-        title: 'Error',
+        title: 'Error al registrarse',
         description: error.message,
         variant: 'destructive'
       });
     } else {
-      toast({
-        title: t('auth.checkEmail'),
-        description: t('auth.confirmationSent')
-      });
+      // Redirect to registration pending page
+      navigate('/registration-pending');
     }
     
     setIsSigningUp(false);
@@ -206,6 +206,9 @@ export default function Auth() {
           </Tabs>
         </CardContent>
       </Card>
+      
+      {/* Feedback tooltip */}
+      <FeedbackTooltip pageName="Autenticación (Login/Registro)" />
     </div>
   );
 }

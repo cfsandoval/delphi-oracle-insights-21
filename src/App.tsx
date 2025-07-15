@@ -9,6 +9,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Experts from "./pages/Experts";
+import RegistrationPending from "./pages/RegistrationPending";
 import NotFound from "./pages/NotFound";
 import StudyPreview from "./pages/StudyPreview";
 import StudyParticipation from "./pages/StudyParticipation";
@@ -27,6 +28,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/registration-pending" element={<RegistrationPending />} />
               <Route path="/experts" element={<Experts />} />
               <Route path="/study/:studyId/preview" element={<StudyPreview />} />
               <Route path="/study/:studyId/participate" element={<StudyParticipation />} />
