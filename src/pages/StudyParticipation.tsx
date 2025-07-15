@@ -171,9 +171,7 @@ const StudyParticipation: React.FC = () => {
       default:
         return null;
     }
-};
-
-export default StudyParticipation;
+  };
 
   return (
     <div className="container mx-auto p-6 max-w-3xl">
@@ -292,3 +290,5 @@ export default StudyParticipation;
     </div>
   );
 };
+
+export default StudyParticipation;
