@@ -95,6 +95,12 @@ const Index = () => {
           </div>
         )}
       </main>
+      
+      {/* Typeform embed */}
+      <footer className="container mx-auto px-6 py-8">
+        <div data-tf-live="01K07N0K36VC9MMHYX1GR00A1E"></div>
+        <script src="//embed.typeform.com/next/embed.js"></script>
+      </footer>
     </div>
   );
 };
