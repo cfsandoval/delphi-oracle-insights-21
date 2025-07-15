@@ -13,6 +13,7 @@ import StudyList from "@/components/StudyList";
 import CreateStudy from "@/components/CreateStudy";
 import Library from "@/components/Library";
 import StudyTypeSelector from "@/components/StudyTypeSelector";
+import { FeedbackTooltip } from "@/components/FeedbackTooltip";
 
 const Index = () => {
   const { user, isLoading } = useAuth();
@@ -39,8 +40,10 @@ const Index = () => {
   }
 
   const handleSelectStudyType = (type: 'traditional' | 'realtime') => {
+    console.log('handleSelectStudyType called with:', type);
     setSelectedStudyType(type);
     setActiveView("create");
+    console.log('State updated to:', { selectedStudyType: type, activeView: "create" });
   };
 
   const handleStudyCreated = () => {
@@ -95,6 +98,9 @@ const Index = () => {
           </div>
         )}
       </main>
+      
+      {/* Feedback tooltip */}
+      <FeedbackTooltip pageName="Dashboard Principal" />
       
       {/* Typeform embed */}
       <footer className="container mx-auto px-6 py-8">

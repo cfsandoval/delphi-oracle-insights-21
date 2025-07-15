@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useStudies } from "@/hooks/useStudies";
 import { Study } from "@/types/study";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { FeedbackTooltip } from "@/components/FeedbackTooltip";
 
 interface CreateStudyProps {
   methodology?: 'traditional' | 'realtime';
@@ -549,6 +550,9 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
           {currentStep === 4 ? t('common.create') + " Study" : t('common.next')}
         </Button>
       </div>
+      
+      {/* Feedback tooltip */}
+      <FeedbackTooltip pageName={`Crear Estudio ${methodology === 'traditional' ? 'Tradicional' : 'Tiempo Real'}`} />
     </div>
   );
 };

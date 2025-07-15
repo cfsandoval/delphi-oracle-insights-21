@@ -6,6 +6,7 @@ import StudyCard from "./StudyCard";
 import StudyFilters from "./StudyFilters";
 import StudyEmptyState from "./StudyEmptyState";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { FeedbackTooltip } from "@/components/FeedbackTooltip";
 
 interface StudyListProps {
   onSelectStudy: (study: Study) => void;
@@ -53,6 +54,9 @@ const StudyList = ({ onSelectStudy }: StudyListProps) => {
       </div>
 
       {filteredStudies.length === 0 && <StudyEmptyState />}
+      
+      {/* Feedback tooltip */}
+      <FeedbackTooltip pageName="Lista de Estudios" />
     </div>
   );
 };

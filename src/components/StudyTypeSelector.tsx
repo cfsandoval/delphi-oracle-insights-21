@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Activity, ArrowRight, AlertCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { FeedbackTooltip } from "@/components/FeedbackTooltip";
 
 interface StudyTypeSelectorProps {
   onSelectType: (type: 'traditional' | 'realtime') => void;
@@ -66,7 +67,10 @@ const StudyTypeSelector = ({ onSelectType }: StudyTypeSelectorProps) => {
 
             <Button 
               className="w-full bg-blue-600 hover:bg-blue-700"
-              onClick={() => onSelectType('traditional')}
+              onClick={() => {
+                console.log('Traditional button clicked');
+                onSelectType('traditional');
+              }}
             >
               {t('study.start.traditional')}
               <ArrowRight className="h-4 w-4 ml-2" />
@@ -111,7 +115,10 @@ const StudyTypeSelector = ({ onSelectType }: StudyTypeSelectorProps) => {
 
             <Button 
               className="w-full bg-emerald-600 hover:bg-emerald-700"
-              onClick={() => onSelectType('realtime')}
+              onClick={() => {
+                console.log('Realtime button clicked');
+                onSelectType('realtime');
+              }}
             >
               {t('study.start.realtime')}
               <ArrowRight className="h-4 w-4 ml-2" />
@@ -125,6 +132,9 @@ const StudyTypeSelector = ({ onSelectType }: StudyTypeSelectorProps) => {
           ¿No estás seguro? Consulta nuestra <a href="#" className="text-blue-600 hover:underline">guía de selección de metodología</a>
         </p>
       </div>
+      
+      {/* Feedback tooltip */}
+      <FeedbackTooltip pageName="Selector de Tipo de Estudio" />
     </div>
   );
 };

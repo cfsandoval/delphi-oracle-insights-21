@@ -7,6 +7,7 @@ import { RoleManager } from '@/components/RoleManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/Header';
+import { FeedbackTooltip } from '@/components/FeedbackTooltip';
 
 export default function Experts() {
   const navigate = useNavigate();
@@ -72,6 +73,9 @@ export default function Experts() {
           )}
         </Tabs>
       </main>
+      
+      {/* Feedback tooltip */}
+      <FeedbackTooltip pageName="Gestión de Expertos" />
     </div>
   );
 }
