@@ -91,7 +91,6 @@ const StudyCard = ({ study, onSelectStudy }: StudyCardProps) => {
           <Button 
             onClick={() => onSelectStudy(study)}
             className="flex-1"
-            disabled={study.status === "draft"}
           >
             {study.status === "draft" ? t('study.configure') : t('study.viewDetails')}
           </Button>

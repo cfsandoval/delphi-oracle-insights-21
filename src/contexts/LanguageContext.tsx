@@ -16,6 +16,7 @@ const translations = {
     'header.subtitle': 'Metodología Delphi Avanzada',
     'header.dashboard': 'Dashboard',
     'header.studies': 'Estudios',
+    'header.experts': 'Expertos',
     'header.library': 'Biblioteca',
     'header.newStudy': 'Nuevo Estudio',
     
@@ -132,6 +133,7 @@ const translations = {
     'header.subtitle': 'Advanced Delphi Methodology',
     'header.dashboard': 'Dashboard',
     'header.studies': 'Studies',
+    'header.experts': 'Experts',
     'header.library': 'Library',
     'header.newStudy': 'New Study',
     

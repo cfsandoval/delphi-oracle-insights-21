@@ -51,6 +51,14 @@ const Header = ({ activeView, setActiveView }: HeaderProps) => {
               >
                 {t('header.studies')}
               </Button>
+              <Link to="/experts">
+                <Button 
+                  variant="ghost"
+                  className="text-white hover:bg-white/20"
+                >
+                  {t('header.experts')}
+                </Button>
+              </Link>
               <Button 
                 variant={activeView === "library" ? "secondary" : "ghost"}
                 onClick={() => setActiveView("library")}
