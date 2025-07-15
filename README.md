@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/3839f65e-a9ab-4c47-a8f2-af5f757c7c3c
+**URL**: delphi.plataformaprospectiva.site
 
 ## How can I edit this code?
 
@@ -10,7 +10,7 @@ There are several ways of editing your application.
 
 **Use Lovable**
 
-Simply visit the [[[Lovable Project](https://lovable.dev/projects/3839f65e-a9ab-4c47-a8f2-af5f757c7c3c](https://github.com/cfsandoval/delphi-oracle-insights-21)](https://github.com/cfsandoval/delphi-oracle-insights-21)  and start prompting.
+Simply visit the  and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
