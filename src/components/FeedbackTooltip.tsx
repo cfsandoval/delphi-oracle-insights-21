@@ -53,54 +53,65 @@ export const FeedbackTooltip: React.FC<FeedbackTooltipProps> = ({ pageName }) =>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              variant="ghost"
-              size="sm"
-              className="fixed bottom-4 right-4 z-50 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90"
+              variant="default"
+              size="lg"
+              className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-full w-16 h-16 animate-pulse hover:animate-none hover:scale-110 border-2 border-white/20"
               onClick={() => setIsOpen(true)}
             >
-              <MessageCircle className="h-4 w-4" />
+              <MessageCircle className="h-6 w-6" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>
-            <p>Enviar comentario sobre esta página</p>
+          <TooltipContent side="left" className="bg-gray-900 text-white border-gray-700">
+            <p className="font-medium">💬 Enviar comentario sobre esta página</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md border-2 border-blue-200 shadow-2xl">
           <DialogHeader>
-            <DialogTitle>Enviar Comentario</DialogTitle>
-            <DialogDescription>
-              Comparte tu experiencia o reporta problemas en la página: <strong>{pageName}</strong>
+            <DialogTitle className="flex items-center gap-2 text-blue-700">
+              <MessageCircle className="h-5 w-5" />
+              Enviar Comentario
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
+              📍 Comparte tu experiencia o reporta problemas en la página: <strong className="text-blue-600">{pageName}</strong>
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4">
             <Textarea
-              placeholder="Describe tu experiencia, sugerencias o problemas que encontraste..."
+              placeholder="💭 Describe tu experiencia, sugerencias o problemas que encontraste..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
-              className="resize-none"
+              className="resize-none border-2 border-gray-200 focus:border-blue-400 transition-colors"
             />
+            <div className="text-xs text-gray-500 bg-blue-50 p-2 rounded">
+              💡 <strong>Tip:</strong> Tu comentario será enviado directamente al equipo de desarrollo para mejorar la plataforma.
+            </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="gap-2">
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancelar
             </Button>
             <Button 
               onClick={handleSubmit} 
               disabled={isSubmitting || !comment.trim()}
-              className="flex items-center gap-2"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2"
             >
               {isSubmitting ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Enviando...
+                </>
               ) : (
-                <Send className="h-4 w-4" />
+                <>
+                  <Send className="h-4 w-4" />
+                  Enviar Comentario
+                </>
               )}
-              Enviar
             </Button>
           </DialogFooter>
         </DialogContent>
