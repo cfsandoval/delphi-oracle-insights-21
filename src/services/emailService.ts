@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { SecurityUtils } from '@/lib/security';
 
 export interface InvitationEmailData {
   expertName: string;
@@ -11,13 +12,24 @@ export interface InvitationEmailData {
 export class EmailService {
   async sendExpertInvitation(data: InvitationEmailData): Promise<boolean> {
     try {
-      const emailHtml = this.generateInvitationHTML(data);
+      // Validate and sanitize input data
+      if (!SecurityUtils.isValidEmail(data.expertEmail)) {
+        throw new Error('Invalid email address');
+      }
+
+      // Check rate limiting
+      if (SecurityUtils.isRateLimited(data.expertEmail, 3, 300000)) { // 3 emails per 5 minutes
+        throw new Error('Rate limit exceeded for this email address');
+      }
+
+      const sanitizedData = this.sanitizeEmailData(data);
+      const emailHtml = this.generateInvitationHTML(sanitizedData);
       
       const { data: result, error } = await supabase.functions.invoke('send-email', {
         body: {
-          to: data.expertEmail,
-          subject: data.studyTitle 
-            ? `Invitación para participar en el estudio: ${data.studyTitle}`
+          to: sanitizedData.expertEmail,
+          subject: sanitizedData.studyTitle 
+            ? `Invitación para participar en el estudio: ${sanitizedData.studyTitle}`
             : 'Invitación para participar en estudios Delphi',
           html: emailHtml,
           from: 'Plataforma Delphi <noreply@delphi.com>'
@@ -54,6 +66,16 @@ export class EmailService {
     }
 
     return { success, failed };
+  }
+
+  private sanitizeEmailData(data: InvitationEmailData): InvitationEmailData {
+    return {
+      expertName: SecurityUtils.validateAndSanitizeText(data.expertName, 100),
+      expertEmail: data.expertEmail.toLowerCase().trim(),
+      studyTitle: data.studyTitle ? SecurityUtils.validateAndSanitizeText(data.studyTitle, 200) : undefined,
+      inviterName: data.inviterName ? SecurityUtils.validateAndSanitizeText(data.inviterName, 100) : undefined,
+      customMessage: data.customMessage ? SecurityUtils.validateAndSanitizeText(data.customMessage, 500) : undefined,
+    };
   }
 
   private generateInvitationHTML(data: InvitationEmailData): string {

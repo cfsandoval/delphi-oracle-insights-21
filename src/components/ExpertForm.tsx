@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useExperts } from '@/hooks/useExperts';
 import { Expert, ExpertFormData } from '@/types/expert';
+import { SecurityUtils } from '@/lib/security';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -94,7 +95,14 @@ export const ExpertForm: React.FC<ExpertFormProps> = ({ expert, open, onOpenChan
               <Label htmlFor="name">{t('experts.name')} *</Label>
               <Input
                 id="name"
-                {...register('name', { required: t('experts.validation.required') })}
+                 {...register('name', { 
+                  required: t('experts.validation.required'),
+                  maxLength: { value: 100, message: 'Name is too long' },
+                  pattern: {
+                    value: /^[a-zA-ZÀ-ÿñÑ\s\.,-]+$/,
+                    message: 'Name contains invalid characters'
+                  }
+                })}
                 placeholder="Dr. Juan Pérez"
               />
               {errors.name && (
@@ -107,11 +115,11 @@ export const ExpertForm: React.FC<ExpertFormProps> = ({ expert, open, onOpenChan
               <Input
                 id="email"
                 type="email"
-                {...register('email', { 
+                 {...register('email', { 
                   required: t('experts.validation.required'),
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: t('experts.validation.email')
+                  validate: {
+                    validEmail: (value) => SecurityUtils.isValidEmail(value) || 'Email format is invalid',
+                    maxLength: (value) => value.length <= 254 || 'Email is too long'
                   }
                 })}
                 placeholder="juan@universidad.edu"
@@ -182,7 +190,11 @@ export const ExpertForm: React.FC<ExpertFormProps> = ({ expert, open, onOpenChan
               <Label htmlFor="phone">{t('experts.phone')}</Label>
               <Input
                 id="phone"
-                {...register('phone')}
+                {...register('phone', {
+                  validate: {
+                    validPhone: (value) => !value || SecurityUtils.isValidPhone(value) || 'Invalid phone number format'
+                  }
+                })}
                 placeholder="+1234567890"
               />
             </div>

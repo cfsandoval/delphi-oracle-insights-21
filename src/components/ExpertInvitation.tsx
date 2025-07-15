@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { EmailService, InvitationEmailData } from '@/services/emailService';
 import { Expert } from '@/types/expert';
+import { SecurityUtils } from '@/lib/security';
 import {
   Dialog,
   DialogContent,
@@ -128,7 +129,7 @@ export const ExpertInvitation: React.FC<ExpertInvitationProps> = ({
               <Input
                 id="studyTitle"
                 value={studyTitle}
-                onChange={(e) => setStudyTitle(e.target.value)}
+                onChange={(e) => setStudyTitle(e.target.value.substring(0, 200))}
                 placeholder="Ej: Consenso sobre tecnologías emergentes"
               />
             </div>
@@ -138,7 +139,7 @@ export const ExpertInvitation: React.FC<ExpertInvitationProps> = ({
               <Input
                 id="inviterName"
                 value={inviterName}
-                onChange={(e) => setInviterName(e.target.value)}
+                onChange={(e) => setInviterName(e.target.value.substring(0, 100))}
                 placeholder="Ej: Dr. Juan Pérez"
               />
             </div>
@@ -148,7 +149,7 @@ export const ExpertInvitation: React.FC<ExpertInvitationProps> = ({
               <Textarea
                 id="customMessage"
                 value={customMessage}
-                onChange={(e) => setCustomMessage(e.target.value)}
+                onChange={(e) => setCustomMessage(e.target.value.substring(0, 500))}
                 placeholder="Agregue un mensaje personalizado para los expertos..."
                 rows={3}
               />

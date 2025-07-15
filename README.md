@@ -103,34 +103,36 @@ npm run dev
 
 La aplicación estará disponible en `http://localhost:8080`
 
-### Usuarios de Prueba
+### Crear Usuario Administrador
 
-- **Admin**: `admin@delphi.com` / `admin123`
-- Crear nuevos usuarios desde la interfaz de autenticación
+Para crear un usuario administrador:
+1. Registrarse a través de la interfaz web
+2. Usar Supabase Dashboard para asignar roles si es necesario
+3. **Nunca usar credenciales hardcodeadas en producción**
 
 ## 📱 Funcionalidades
 
-- ✅ Gestión de expertos
+- ✅ Gestión de expertos con validación robusta
 - ✅ Creación de estudios Delphi tradicionales y en tiempo real
-- ✅ Sistema de invitaciones por email
-- ✅ Análisis de consenso
+- ✅ Sistema de invitaciones por email seguro
+- ✅ Análisis de consenso avanzado
 - ✅ Interfaz multiidioma (ES/EN)
-- ✅ Autenticación con Supabase
+- ✅ Autenticación segura con Supabase
 - ✅ Diseño responsivo
+- ✅ **Seguridad avanzada** con protección contra XSS, CSRF y rate limiting
 
-**Edit a file directly in GitHub**
+## 🔒 Seguridad
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Esta plataforma implementa múltiples capas de seguridad:
 
-**Use GitHub Codespaces**
+- **Validación de entrada**: Sanitización de todos los datos de usuario
+- **Rate limiting**: Protección contra spam y ataques de fuerza bruta  
+- **Políticas CSP**: Prevención de ataques XSS
+- **Headers de seguridad**: Protección contra clickjacking y sniffing
+- **RLS en base de datos**: Acceso restringido a datos por usuario
+- **Autenticación robusta**: Gestión segura de sesiones
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Ver [SECURITY.md](./SECURITY.md) para detalles completos.
 
 ## What technologies are used for this project?
 
