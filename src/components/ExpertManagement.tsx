@@ -9,7 +9,9 @@ import { ExpertTable } from './ExpertTable';
 import { ExpertForm } from './ExpertForm';
 import { ExpertImport } from './ExpertImport';
 import { ExpertInvitation } from './ExpertInvitation';
-import { Plus, Download, Upload, Users, Mail } from 'lucide-react';
+import { EmailService } from '@/services/emailService';
+import { Plus, Download, Upload, Users, Mail, TestTube } from 'lucide-react';
+import { toast } from 'sonner';
 
 export const ExpertManagement: React.FC = () => {
   const { t } = useLanguage();
@@ -41,6 +43,22 @@ export const ExpertManagement: React.FC = () => {
     }
   };
 
+  const handleTestEmail = async () => {
+    try {
+      toast.info('Probando configuración de email...');
+      const emailService = new EmailService();
+      const result = await emailService.testEmailConfiguration();
+      if (result.success) {
+        toast.success('✅ Configuración de email funcionando correctamente');
+      } else {
+        toast.error(`❌ Error en configuración: ${result.message}`);
+      }
+    } catch (error) {
+      toast.error('❌ Error al probar configuración de email');
+      console.error('Email test error:', error);
+    }
+  };
+
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -65,6 +83,14 @@ export const ExpertManagement: React.FC = () => {
           />
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={handleTestEmail}
+            className="flex items-center gap-2"
+          >
+            <TestTube className="h-4 w-4" />
+            Probar Email
+          </Button>
           <Button
             variant="outline"
             onClick={() => setShowImport(true)}
