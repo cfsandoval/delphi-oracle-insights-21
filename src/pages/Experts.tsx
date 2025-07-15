@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRoles } from '@/hooks/useRoles';
 import { ExpertManagement } from '@/components/ExpertManagement';
@@ -9,8 +9,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/Header';
 
 export default function Experts() {
+  const navigate = useNavigate();
   const { user, isLoading: authLoading } = useAuth();
   const { isAdmin, isManager, isLoading: rolesLoading } = useRoles();
+
+  const handleSetActiveView = (view: string) => {
+    navigate('/');
+  };
 
   if (authLoading || rolesLoading) {
     return (
@@ -31,7 +36,7 @@ export default function Experts() {
   if (!isAdmin() && !isManager()) {
     return (
       <div className="min-h-screen bg-background">
-        <Header activeView="experts" setActiveView={() => {}} />
+        <Header activeView="experts" setActiveView={handleSetActiveView} />
         <main className="container mx-auto p-6">
           <Card>
             <CardContent className="pt-6">
@@ -48,7 +53,7 @@ export default function Experts() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header activeView="experts" setActiveView={() => {}} />
+      <Header activeView="experts" setActiveView={handleSetActiveView} />
       <main className="container mx-auto p-6">
         <Tabs defaultValue="experts" className="space-y-6">
           <TabsList>
