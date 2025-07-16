@@ -121,6 +121,11 @@ Para crear un usuario administrador:
 - ✅ Diseño responsivo
 - ✅ **Seguridad avanzada** con protección contra XSS, CSRF y rate limiting
 
+## Uso de la Plataforma
+
+Para una guía paso a paso sobre gestión de expertos, creación de estudios e invitaciones, consulta [docs/USO.md](./docs/USO.md).
+
+
 ## 🔒 Seguridad
 
 Esta plataforma implementa múltiples capas de seguridad:
