@@ -16,33 +16,31 @@ const DelphiRealtime = ({ study }: DelphiRealtimeProps) => {
   const { language, t } = useLanguage();
   const [selectedRound, setSelectedRound] = useState<any>(null);
 
-  // Datos simulados para las rondas en tiempo real
-  const rounds = [
-    {
-      round: 1,
-      responses: 18,
-      consensus: 52,
-      status: "completed",
-      date: "2024-01-15",
-      duration: "3 horas"
-    },
-    {
-      round: 2,
-      responses: 16,
-      consensus: 71,
-      status: "completed", 
-      date: "2024-01-15",
-      duration: "2.5 horas"
-    },
-    {
-      round: 3,
-      responses: 15,
-      consensus: 83,
-      status: "active",
-      date: "2024-01-15",
-      duration: "En progreso (45 min)"
+  // Generar rondas basadas en los datos del estudio
+  const generateRounds = () => {
+    const rounds = [];
+    for (let i = 1; i <= study.rounds; i++) {
+      let status = 'pending';
+      if (i < study.currentRound) {
+        status = 'completed';
+      } else if (i === study.currentRound && study.currentRound > 0) {
+        status = 'active';
+      }
+
+      rounds.push({
+        round: i,
+        responses: status === 'completed' ? study.experts : (status === 'active' ? Math.floor(study.experts * 0.7) : 0),
+        consensus: status === 'completed' ? (65 + i * 8) : (status === 'active' ? study.consensus : 0),
+        status: status,
+        date: status === 'completed' ? new Date(Date.now() - (study.rounds - i) * 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] : 
+              (status === 'active' ? new Date().toISOString().split('T')[0] : 'TBD'),
+        duration: status === 'completed' ? 'Tiempo real' : (status === 'active' ? 'En progreso' : 'Pendiente')
+      });
     }
-  ];
+    return rounds;
+  };
+
+  const rounds = generateRounds();
 
   const getStatusBadge = (status: string) => {
     switch (status) {

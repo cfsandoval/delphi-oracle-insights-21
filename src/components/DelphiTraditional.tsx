@@ -16,33 +16,31 @@ const DelphiTraditional = ({ study }: DelphiTraditionalProps) => {
   const { language, t } = useLanguage();
   const [selectedRound, setSelectedRound] = useState<any>(null);
 
-  // Datos simulados para las rondas
-  const rounds = [
-    {
-      round: 1,
-      responses: 15,
-      consensus: 45,
-      status: "completed",
-      date: "2024-01-15",
-      duration: "7 días"
-    },
-    {
-      round: 2,
-      responses: 14,
-      consensus: 67,
-      status: "completed", 
-      date: "2024-01-22",
-      duration: "5 días"
-    },
-    {
-      round: 3,
-      responses: 13,
-      consensus: 78,
-      status: "active",
-      date: "2024-01-29",
-      duration: "En progreso"
+  // Generar rondas basadas en los datos del estudio
+  const generateRounds = () => {
+    const rounds = [];
+    for (let i = 1; i <= study.rounds; i++) {
+      let status = 'pending';
+      if (i < study.currentRound) {
+        status = 'completed';
+      } else if (i === study.currentRound && study.currentRound > 0) {
+        status = 'active';
+      }
+
+      rounds.push({
+        round: i,
+        responses: status === 'completed' ? study.experts : (status === 'active' ? Math.floor(study.experts * 0.6) : 0),
+        consensus: status === 'completed' ? (60 + i * 10) : (status === 'active' ? study.consensus : 0),
+        status: status,
+        date: status === 'completed' ? new Date(Date.now() - (study.rounds - i) * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] : 
+              (status === 'active' ? new Date().toISOString().split('T')[0] : 'TBD'),
+        duration: status === 'completed' ? '7 días' : (status === 'active' ? 'En progreso' : 'Pendiente')
+      });
     }
-  ];
+    return rounds;
+  };
+
+  const rounds = generateRounds();
 
   const getStatusBadge = (status: string) => {
     switch (status) {
