@@ -144,6 +144,7 @@ export type Database = {
           description_en: string | null
           description_es: string | null
           id: string
+          is_public: boolean
           rounds_data: Json | null
           settings: Json | null
           status: string
@@ -159,6 +160,7 @@ export type Database = {
           description_en?: string | null
           description_es?: string | null
           id?: string
+          is_public?: boolean
           rounds_data?: Json | null
           settings?: Json | null
           status?: string
@@ -174,6 +176,7 @@ export type Database = {
           description_en?: string | null
           description_es?: string | null
           id?: string
+          is_public?: boolean
           rounds_data?: Json | null
           settings?: Json | null
           status?: string

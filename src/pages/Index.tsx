@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import Dashboard from "@/components/Dashboard";
 import DelphiTraditional from "@/components/DelphiTraditional";
 import DelphiRealtime from "@/components/DelphiRealtime";
-import StudyList from "@/components/StudyList";
+import StudyListWithSections from "@/components/StudyListWithSections";
 import CreateStudy from "@/components/CreateStudy";
 import Library from "@/components/Library";
 import Documentation from "@/components/Documentation";
@@ -62,7 +62,7 @@ const Index = () => {
         {activeView === "dashboard" && <Dashboard setActiveView={setActiveView} onSelectStudyType={handleSelectStudyType} />}
 
         {activeView === "studies" && (
-          <StudyList onSelectStudy={setSelectedStudy} />
+          <StudyListWithSections onSelectStudy={setSelectedStudy} />
         )}
 
         {activeView === "library" && <Library />}

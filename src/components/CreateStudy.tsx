@@ -9,8 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Clock, Users, Target, Plus, X, AlertCircle } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { useStudies } from "@/hooks/useStudies";
+import { useSupabaseStudies } from "@/hooks/useSupabaseStudies";
 import { Study } from "@/types/study";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { FeedbackTooltip } from "@/components/FeedbackTooltip";
@@ -32,7 +33,8 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
     rounds: 3,
     participants: [],
     questions: [],
-    duration: ""
+    duration: "",
+    isPublic: false
   });
   const [newParticipant, setNewParticipant] = useState({ 
     name: "", 
@@ -43,7 +45,7 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
   });
   const [newQuestion, setNewQuestion] = useState({ text: "", type: "open", options: "" });
   const { toast } = useToast();
-  const { createStudy } = useStudies();
+  const { createStudy } = useSupabaseStudies();
 
   const steps = [
     { id: 1, title: "Basic Information", icon: Target },
@@ -100,24 +102,34 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
     });
   };
 
-  const handleCreateStudy = () => {
-    const newStudy = createStudy({
-      title: studyData.title,
-      description: studyData.description,
-      methodology: studyData.methodology as "traditional" | "realtime",
-      status: "draft" as const,
-      category: studyData.category || "general",
-      experts: studyData.participants.length,
-      rounds: studyData.methodology === "traditional" ? studyData.rounds : 1,
-      currentRound: 0,
-      consensus: 0
-    });
+  const handleCreateStudy = async () => {
+    try {
+      const newStudy = await createStudy({
+        title: studyData.title,
+        description: studyData.description,
+        methodology: studyData.methodology as "traditional" | "realtime",
+        status: "draft" as const,
+        category: studyData.category || "general",
+        experts: studyData.participants.length,
+        rounds: studyData.methodology === "traditional" ? studyData.rounds : 1,
+        currentRound: 0,
+        consensus: 0,
+        isPublic: studyData.isPublic || false
+      });
 
-    toast({
-      title: "Study created successfully!",
-      description: `The study "${studyData.title.en}" has been saved and is ready to begin.`,
-    });
-    onStudyCreated();
+      toast({
+        title: "Study created successfully!",
+        description: `The study "${studyData.title.en}" has been saved and is ready to begin.`,
+      });
+      onStudyCreated();
+    } catch (error) {
+      console.error('Error creating study:', error);
+      toast({
+        title: "Error creating study",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
+    }
   };
 
   const progress = (currentStep / 4) * 100;
@@ -253,12 +265,26 @@ const CreateStudy = ({ methodology, onStudyCreated, onBack }: CreateStudyProps) 
                       <SelectItem value="política pública">Política Pública</SelectItem>
                       <SelectItem value="economía">Economía</SelectItem>
                       <SelectItem value="tecnología">Tecnología</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-          )}
+                     </SelectContent>
+                   </Select>
+                 </div>
+
+                 <div className="flex items-center justify-between p-4 border rounded-lg">
+                   <div className="space-y-1">
+                     <Label htmlFor="isPublic">Make Study Public</Label>
+                     <p className="text-sm text-gray-600">
+                       Public studies can be viewed by anyone. Private studies are only visible to you.
+                     </p>
+                   </div>
+                   <Switch
+                     id="isPublic"
+                     checked={studyData.isPublic}
+                     onCheckedChange={(checked) => setStudyData({...studyData, isPublic: checked})}
+                   />
+                 </div>
+               </div>
+             </div>
+           )}
 
           {currentStep === 2 && methodology && (
             <div className="space-y-6">

@@ -16,6 +16,7 @@ export const mockStudies: Study[] = [
     currentRound: 2,
     consensus: 72,
     createdAt: "2024-01-15",
+    isPublic: true,
     description: {
       es: "Estudio Delphi para identificar prioridades de desarrollo sostenible en la región Caribe colombiana con expertos locales",
       en: "Delphi study to identify sustainable development priorities in the Colombian Caribbean region with local experts"
@@ -35,6 +36,7 @@ export const mockStudies: Study[] = [
     currentRound: 1,
     consensus: 68,
     createdAt: "2024-01-10",
+    isPublic: false,
     description: {
       es: "Consenso sobre estrategias de salud pública para Bogotá con participación de epidemiólogos y administradores de salud",
       en: "Consensus on public health strategies for Bogotá with participation of epidemiologists and health administrators"
@@ -54,6 +56,7 @@ export const mockStudies: Study[] = [
     currentRound: 4,
     consensus: 89,
     createdAt: "2023-12-01",
+    isPublic: true,
     description: {
       es: "Identificación de mejores prácticas para implementación de programas de desarrollo territorial en municipios PDET",
       en: "Identification of best practices for implementing territorial development programs in PDET municipalities"
@@ -73,6 +76,7 @@ export const mockStudies: Study[] = [
     currentRound: 0,
     consensus: 0,
     createdAt: "2024-01-20",
+    isPublic: false,
     description: {
       es: "Exploración de metodologías innovadoras para educación en zonas rurales del departamento de Nariño",
       en: "Exploration of innovative methodologies for education in rural areas of Nariño department"

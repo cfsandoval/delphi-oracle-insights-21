@@ -17,4 +17,5 @@ export interface Study {
     es: string;
     en: string;
   };
+  isPublic: boolean;
 }

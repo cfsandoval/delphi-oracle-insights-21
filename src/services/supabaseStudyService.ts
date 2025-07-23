@@ -16,6 +16,21 @@ export class SupabaseStudyService {
     return data.map(this.mapDbStudyToStudy);
   }
 
+  async getPublicStudies(): Promise<Study[]> {
+    const { data, error } = await supabase
+      .from('studies')
+      .select('*')
+      .eq('is_public', true)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching public studies:', error);
+      return [];
+    }
+
+    return data.map(this.mapDbStudyToStudy);
+  }
+
   async getStudyById(id: string): Promise<Study | null> {
     const { data, error } = await supabase
       .from('studies')
@@ -47,7 +62,13 @@ export class SupabaseStudyService {
       type: studyData.methodology,
       status: studyData.status,
       category: studyData.category || 'general',
-      rounds_data: { rounds: studyData.rounds, currentRound: studyData.currentRound, experts: studyData.experts, consensus: studyData.consensus },
+      is_public: studyData.isPublic || false,
+      rounds_data: { 
+        rounds: studyData.rounds, 
+        currentRound: studyData.currentRound, 
+        experts: studyData.experts, 
+        consensus: studyData.consensus 
+      },
       settings: {}
     };
 
@@ -81,6 +102,7 @@ export class SupabaseStudyService {
     if (updates.methodology) dbUpdates.type = updates.methodology;
     if (updates.status) dbUpdates.status = updates.status;
     if (updates.category) dbUpdates.category = updates.category;
+    if (updates.isPublic !== undefined) dbUpdates.is_public = updates.isPublic;
     if (updates.rounds !== undefined || updates.currentRound !== undefined || updates.experts !== undefined || updates.consensus !== undefined) {
       dbUpdates.rounds_data = { 
         rounds: updates.rounds ?? 0, 
@@ -138,6 +160,7 @@ export class SupabaseStudyService {
       currentRound: roundsData.currentRound || 0,
       experts: roundsData.experts || 0,
       consensus: roundsData.consensus || 0,
+      isPublic: dbStudy.is_public || false,
       createdAt: new Date(dbStudy.created_at).toISOString().split('T')[0]
     };
   }
