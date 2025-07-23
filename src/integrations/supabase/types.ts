@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      documents: {
+        Row: {
+          category: string
+          content: string | null
+          created_at: string
+          created_by: string
+          description: string | null
+          external_url: string | null
+          file_url: string | null
+          id: string
+          language: string
+          tags: string[] | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          content?: string | null
+          created_at?: string
+          created_by: string
+          description?: string | null
+          external_url?: string | null
+          file_url?: string | null
+          id?: string
+          language?: string
+          tags?: string[] | null
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content?: string | null
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          external_url?: string | null
+          file_url?: string | null
+          id?: string
+          language?: string
+          tags?: string[] | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       experts: {
         Row: {
           created_at: string

@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Lightbulb, Plus, LogOut, User } from "lucide-react";
+import { Lightbulb, Plus, LogOut, User, FileText } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -65,6 +65,14 @@ const Header = ({ activeView, setActiveView }: HeaderProps) => {
                 className="text-white hover:bg-white/20"
               >
                 {t('header.library')}
+              </Button>
+              <Button 
+                variant={activeView === "documentation" ? "secondary" : "ghost"}
+                onClick={() => setActiveView("documentation")}
+                className="text-white hover:bg-white/20"
+              >
+                <FileText className="h-4 w-4 mr-2" />
+                Documentación
               </Button>
               <Button 
                 variant={activeView === "create" ? "secondary" : "ghost"}

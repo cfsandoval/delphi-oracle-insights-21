@@ -12,6 +12,7 @@ import DelphiRealtime from "@/components/DelphiRealtime";
 import StudyList from "@/components/StudyList";
 import CreateStudy from "@/components/CreateStudy";
 import Library from "@/components/Library";
+import Documentation from "@/components/Documentation";
 import StudyTypeSelector from "@/components/StudyTypeSelector";
 import { FeedbackTooltip } from "@/components/FeedbackTooltip";
 import { WelcomeModal } from "@/components/WelcomeModal";
@@ -65,6 +66,8 @@ const Index = () => {
         )}
 
         {activeView === "library" && <Library />}
+        
+        {activeView === "documentation" && <Documentation />}
 
         {activeView === "create" && !selectedStudyType && (
           <StudyTypeSelector onSelectType={handleSelectStudyType} />
