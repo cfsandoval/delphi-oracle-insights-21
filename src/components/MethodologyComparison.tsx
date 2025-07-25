@@ -1,13 +1,10 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Activity, ArrowRight } from "lucide-react";
-
 const MethodologyComparison = () => {
-  return (
-    <Card className="gradient-card">
+  return <Card className="gradient-card">
       <CardHeader>
         <CardTitle className="text-2xl">Metodologías Disponibles</CardTitle>
         <CardDescription>
@@ -61,17 +58,12 @@ const MethodologyComparison = () => {
                   <Badge variant="secondary">Adaptación Rápida</Badge>
                   <Badge variant="secondary">Alta Eficiencia</Badge>
                 </div>
-                <Button>
-                  Comenzar Estudio en Tiempo Real
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+                
               </div>
             </div>
           </TabsContent>
         </Tabs>
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
-
 export default MethodologyComparison;
